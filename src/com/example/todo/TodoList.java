@@ -15,12 +15,13 @@ public class TodoList extends Activity implements TodoListReady {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
         fetchTodosTask.delegate = this;
         fetchTodosTask.execute("https://todo-list-app-dan.herokuapp.com/api/tasks");
     }
 
     @Override
-    public void resultsReady(List<TodoItem> todoItems) {
+    public void displayList(List<TodoItem> todoItems) {
         ArrayAdapter<TodoItem> adapter = new ArrayAdapter<TodoItem>(this, android.R.layout.simple_list_item_1, todoItems);
         ListView listView = (ListView)findViewById(R.id.todoItems);
         listView.setAdapter(adapter);

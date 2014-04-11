@@ -62,6 +62,6 @@ public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
                 e.printStackTrace();
             }
         }
-        delegate.resultsReady(todoItems);
+        delegate.displayList(todoItems);
     }
 }
