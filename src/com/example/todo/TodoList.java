@@ -2,8 +2,10 @@ package com.example.todo;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.List;
 
@@ -24,5 +26,11 @@ public class TodoList extends Activity implements TodoListReady {
         ArrayAdapter<TodoItem> adapter = new ArrayAdapter<TodoItem>(this, android.R.layout.simple_list_item_1, todoItems);
         ListView listView = (ListView)findViewById(R.id.todoItems);
         listView.setAdapter(adapter);
+        makeProgressBarDisappear();
+    }
+
+    private void makeProgressBarDisappear() {
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 }
