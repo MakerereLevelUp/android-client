@@ -1,11 +1,11 @@
 package com.example.todo;
 
-public class Todo {
+public class TodoItem {
     private String todoText;
-    public Todo(String todoText) {
+    public TodoItem(String todoText) {
         this.todoText = todoText;
     }
     public String toString() {
-        return this.todoText;
+        return todoText;
     }
 }

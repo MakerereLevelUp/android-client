@@ -1,25 +1,28 @@
 package com.example.todo;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TodoList extends Activity {
+public class TodoList extends Activity implements TodoListReady {
+
+    FetchTodosTask fetchTodosTask = new FetchTodosTask();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        List<Todo> todos = new ArrayList<Todo>();
-        todos.add(new Todo("Buy milk"));
-        todos.add(new Todo("Boil water"));
+        fetchTodosTask.delegate = this;
+        fetchTodosTask.execute("https://todo-list-app-dan.herokuapp.com/api/tasks");
+    }
 
-        ListView todoList = (ListView)findViewById(R.id.todos);
-
-        ArrayAdapter<Todo> adapter = new ArrayAdapter<Todo>(this, android.R.layout.simple_list_item_1, todos);
-        todoList.setAdapter(adapter);
+    @Override
+    public void resultsReady(List<TodoItem> todoItems) {
+        ArrayAdapter<TodoItem> adapter = new ArrayAdapter<TodoItem>(this, android.R.layout.simple_list_item_1, todoItems);
+        ListView listView = (ListView)findViewById(R.id.todoItems);
+        listView.setAdapter(adapter);
     }
 }
