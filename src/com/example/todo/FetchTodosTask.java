@@ -18,7 +18,7 @@ import java.util.List;
 
 public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
 
-    public TodoListReady delegate = null;
+    public TodoListScreen listScreen = null;
 
     @Override
     protected JSONArray doInBackground(String... urls) {
@@ -54,7 +54,7 @@ public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
                 e.printStackTrace();
             }
         }
-        delegate.displayList(todoItems);
+        listScreen.displayList(todoItems);
     }
 
     private String getResponseBody(HttpResponse response) {

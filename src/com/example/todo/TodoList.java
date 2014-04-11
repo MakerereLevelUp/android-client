@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-public class TodoList extends Activity implements TodoListReady {
+public class TodoList extends Activity implements TodoListScreen {
 
     FetchTodosTask fetchTodosTask = new FetchTodosTask();
     @Override
@@ -17,7 +17,7 @@ public class TodoList extends Activity implements TodoListReady {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        fetchTodosTask.delegate = this;
+        fetchTodosTask.listScreen = this;
         fetchTodosTask.execute("https://todo-list-app-dan.herokuapp.com/api/tasks");
     }
 

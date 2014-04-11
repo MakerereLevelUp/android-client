@@ -2,6 +2,6 @@ package com.example.todo;
 
 import java.util.List;
 
-public interface TodoListReady {
+public interface TodoListScreen {
     void displayList(List<TodoItem> todoItems);
 }
