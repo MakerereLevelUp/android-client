@@ -1,9 +1,7 @@
 package com.example.todo;
 
 import android.os.AsyncTask;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -20,35 +18,29 @@ import java.util.List;
 
 public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
 
+    public TodoListReady delegate = null;
+
     @Override
     protected JSONArray doInBackground(String... urls) {
-        StringBuilder builder = new StringBuilder();
+
         HttpClient client = new DefaultHttpClient();
         HttpGet get = new HttpGet(urls[0]);
+        String responseBody = "{}";
         try {
             HttpResponse response = client.execute(get);
-            HttpEntity entity = response.getEntity();
-            InputStream content = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            responseBody = getResponseBody(response);
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         try {
-            return new JSONArray(builder.toString());
+            return new JSONArray(responseBody);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
     }
-
-    public TodoListReady delegate = null;
 
     @Override
     protected void onPostExecute(JSONArray todoJsonArray) {
@@ -63,5 +55,21 @@ public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
             }
         }
         delegate.displayList(todoItems);
+    }
+
+    private String getResponseBody(HttpResponse response) {
+        StringBuilder builder = new StringBuilder();
+        try {
+            InputStream body = response.getEntity().getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(body));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            return builder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "{}";
+        }
     }
 }
