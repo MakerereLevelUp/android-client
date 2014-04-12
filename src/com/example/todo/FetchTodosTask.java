@@ -49,7 +49,7 @@ public class FetchTodosTask extends AsyncTask<String, Void, JSONArray> {
         for (int i = 0; i < todoJsonArray.length(); i++) {
             try {
                 JSONObject jsonObject = todoJsonArray.getJSONObject(i);
-                todoItems.add(new TodoItem(jsonObject.getString("description")));
+                todoItems.add(new TodoItem(jsonObject.getString("title")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -12,6 +12,7 @@ import java.util.List;
 public class TodoList extends Activity implements TodoListScreen {
 
     FetchTodosTask fetchTodosTask = new FetchTodosTask();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
